@@ -24,7 +24,7 @@ function thingyAutoload($className) {
     $className = basename ( $className );
     
     // The root dir of where all our classes are
-    $classPath = THINGY_CORE_DIR . THINGY_SITE_DIR_CLASSES . $namespaceDir . '/';
+    $classPath = THINGY_CORE_DIR . "classes/$namespaceDir/";
     
     // The path of this class, relative to the root class directory:
     $classPath .= str_replace ( '_', '/', $className );

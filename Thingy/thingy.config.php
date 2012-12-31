@@ -22,21 +22,6 @@ define('THINGY_WEB_DIR', '~acobster/Thingy/public/');
 define('THINGY_DEBUG', true);
 define('THINGY_DEVEL', true);
 
-/*
- * Define site specific directories. The following THINGY_SITE_DIR_*
- * constants MUST be defined:
- * 
- * TEMPLATE
- * CLASSES
- * 
- * THINGY_SITE_DIR_* constants are relative to WEB_ROOT_DIR
- */
-
-// Where your templates live
-define('THINGY_SITE_DIR_TEMPLATE', 'templates/default/');
-// Where your classes live
-define('THINGY_SITE_DIR_CLASSES', 'classes/');
-
 
 
 
@@ -64,6 +49,17 @@ define( 'THINGY_ALLOW_PARENT_PAGES', true );
 $GLOBALS['scheme'] = array(
     '*' => 'ThingyCore\Controllers\Controller',
     'posts' => 'ThingyCore\Controllers\PostController',
+);
+
+$GLOBALS['templates'] = array(
+    '*'	=> 'index.html',
+    'one' => array(
+        '*' => 'index.html',
+        'two' => array(
+            '*' => 'index.html',
+            'eels' => 'fancy.html',
+        ),
+    ),
 );
 
 $GLOBALS['connections'] = array(

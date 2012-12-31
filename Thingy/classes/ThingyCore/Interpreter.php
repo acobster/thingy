@@ -10,7 +10,7 @@ class Interpreter {
     const DEFAULT_CONTROLLER_CLASS = 'ThingyCore\Controllers\Controller';
         
     protected $request;
-    protected $pieces;
+    protected static $pieces;
     
     public static function create( Request $request ) {
         $class = defined( 'THINGY_INTERPRETER_CLASS')
@@ -21,19 +21,16 @@ class Interpreter {
     }
 
     /**
-     * 
-     * Enter description here ...
-     * @param array $request
+     * @param Request $request
      */
-    protected function Interpreter( Request $request ) {
+    protected function __construct( Request $request ) {
         $this->request = $request;
     }
 
     public function interpret() {
         $pieces = $this->request->getPath();
-        $controllerClass =
-            // Get scheme from serialized array
-            $this->getControllerFromPieces( $pieces, $GLOBALS['scheme'] );
+        list( $controllerClass, $pieces ) = static::parseHierarchy(
+            $pieces, $GLOBALS['scheme'] );
 
         if( ! class_exists( $controllerClass) ) {
             Debug::out( "$controllerClass not found: defaulting" );
@@ -41,24 +38,23 @@ class Interpreter {
         }
 
         $controller = new $controllerClass();
-        $controller->execute( $this->pieces );
+        $controller->execute( $pieces );
     }
 
-    protected function getControllerFromPieces( $pieces, $stack ) {
+    public static function parseHierarchy( $pieces, $stack ) {
         
         $first = $pieces[0];
         
         if( isset( $stack[$first] ) ) {
             if( is_string( $stack[$first] ) ) {
-                $this->pieces = array_slice( $pieces, 1 );
-                return $stack[$first];
+                $pieces = array_slice( $pieces, 1 );
+                return array( $stack[$first], $pieces );
             } else {
-                return $this->getControllerFromPieces(
+                return static::parseHierarchy(
                     array_slice( $pieces, 1 ), $stack[$first] );
             }
         } else {
-            $this->pieces = $pieces;
-            return $stack['*'];
+            return array( $stack['*'], $pieces );
         }
     }
 }

@@ -2,25 +2,23 @@
 
 namespace ThingyCore\Controllers;
 
-use \ActiveRecord\Config;
-use \ActiveRecord\Model;
-
 use ThingyCore\Thingy;
-use ThingyCore\Models\Page;
+use ThingyCore\Interpreter;
 use ThingyCore\Templates;
-
 use ThingyCore\Debug;
 
 class Controller {
     
     protected $defaultModel;
-    protected $home;
-    protected $defaultTemplate;
     
     public function __construct() {
         $this->defaultModel = defined( THINGY_DEFAULT_MODEL )
         	? THINGY_DEFAULT_MODEL
         	: '\ThingyCore\Models\Page';
+        	
+        $this->templateClass = defined ( THINGY_TEMPLATE_ENGINE )
+            ? THINGY_TEMPLATE_ENGINE
+            : 'ThingyCore\Templates\TwigWrapper';
     }
     
     public function execute( $pieces ) {
@@ -43,7 +41,6 @@ class Controller {
     
     public function index( $pieces ) {
         
-Debug::dump($pieces);
         $name = empty( $pieces[0] ) ? 'home' : $pieces[0];
         
         if( count( $pieces ) > 1 ) {
@@ -57,8 +54,8 @@ Debug::dump($pieces);
         } else {
             $model = $this->initModel( $name );
         }
-
-        $template = new Templates\TwigWrapper( $name );
+        
+        $template = $this->initTemplate( $pieces );
         
         if( ! empty( $model ) ) {
             $data = $model->prepare();
@@ -80,6 +77,13 @@ Debug::dump($pieces);
         } else {
             return $model->findByName( $ident );
         }
+    }
+    
+    protected function initTemplate( $pieces ) {
+        $file = Interpreter::parseHierarchy( $pieces, $GLOBALS['templates'] );
+        $file = $file[0];
+        $templateClass = $this->templateClass;
+        return new $templateClass( $file );
     }
     
     protected function error404() {

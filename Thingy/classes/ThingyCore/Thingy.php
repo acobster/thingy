@@ -27,8 +27,6 @@ class Thingy {
     
     public function main() {
         
-        ThingySettings::init();
-        
         // Build the request
         $this->request = Request::create();
         $this->request->initPath();

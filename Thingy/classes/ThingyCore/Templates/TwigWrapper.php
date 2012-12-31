@@ -11,12 +11,11 @@ class TwigWrapper extends Template {
     protected $templateFileName;
     
     public function __construct( $name ) {
-      
-      $file = static::getTemplateFile( $name );
-      \Twig_Autoloader::register();
-      $this->loader = new \Twig_Loader_Filesystem( dirname( $file ) );
-      $this->twig = new \Twig_Environment( $this->loader );
-      $this->templateFileName = basename( $file );
+        $file = static::getTemplateFile ( $name );
+        \Twig_Autoloader::register ();
+        $this->loader = new \Twig_Loader_Filesystem ( dirname ( $file ) );
+        $this->twig = new \Twig_Environment ( $this->loader );
+        $this->templateFileName = basename( $file );
     }
     
     public function getOutput( array $data, $edit = false ) {
