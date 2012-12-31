@@ -1,0 +1,6 @@
+[submodule "Thingy/templates/engine/vendor/Twig"]
+	path = Thingy/templates/engine/vendor/Twig
+	url = git://github.com/fabpot/Twig.git
+[submodule "Thingy/doctrine"]
+	path = Thingy/doctrine
+	url = git://github.com/doctrine/doctrine2.git
