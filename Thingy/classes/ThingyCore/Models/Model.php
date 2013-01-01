@@ -31,7 +31,13 @@ abstract class Model {
     public function __call( $method, $args ) {
         if( substr( $method, 0, 6 ) == 'findBy' ) {
             $by = strtolower( substr( $method, 6 ) );
-            return $this->_repo->findOneBy( array( $by => $args[0] ) );
+            // Should be no unconsumed pieces, 
+            // so this page should not have any parents
+            $where = array(
+                $by => $args[0],
+                'parent' => null,
+            );
+            return $this->_repo->findOneBy( $where );
         }
     }
     
