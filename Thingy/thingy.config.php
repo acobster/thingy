@@ -4,16 +4,41 @@
  * Config file for Thingy installation
  */
 
-/*
- * DB Connection info 
- */
+$config = array(
+    'coreDir' => '/Users/acobster/Sites/Thingy/Thingy/',
+    'webDir' => '~acobster/Thingy/public/',
+    'debug' => true,
+    'environment' => 'devel',
+    'db' => array(
+        'default' => array(
+            'driver' => 'pdo_mysql',
+            'host' => 'localhost',
+            'dbname' => 'thingytest',
+            'user' => 'coby',
+            'password' => 'uL2YcVJPseU5XBBC',
+        ),
+    ),
+    'controllers' => array(
+        '*' => 'ThingyCore\Controllers\Controller',
+        'posts' => 'ThingyCore\Controllers\PostController',
+    ),
+    'templates' => array(
+        '*'	=> 'index.html',
+        'one' => array(
+            '*' => 'index.html',
+            'two' => array(
+                '*' => 'index.html',
+                'eels' => 'fancy.html',
+            ),
+        ),
+    ),
+    'allowParentPages' => true,
+);
+
 define('THINGY_DB_DRIVER', 'pdo_mysql');
-define('THINGY_DB_HOST', 'localhost');
 define('THINGY_DB_NAME', 'thingytest');
 define('THINGY_DB_USER', 'coby');
 define('THINGY_DB_PW', 'uL2YcVJPseU5XBBC');
-
-define('THINGY_DB_DSN', 'mysql:dbname=thingytest;host=localhost');
 
 define('THINGY_CORE_DIR', '/Users/acobster/Sites/Thingy/Thingy/');
 
