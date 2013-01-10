@@ -21,7 +21,7 @@ abstract class Model {
     
     public function __construct() {
         $config = Setup::createAnnotationMetadataConfiguration(
-            array( THINGY_CORE_DIR . '/Thingy/Models/' ),
+            \ThingyCore\Thingy::single()->modelDirs,
             THINGY_DEVEL );
         $this->_em = EntityManager::create($GLOBALS['connections']['default'],
             $config);

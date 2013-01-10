@@ -4,9 +4,10 @@
  * Config file for Thingy installation
  */
 
+define('THINGY_CORE_DIR', '/Users/acobster/Sites/Thingy/Thingy/');
+define('THINGY_WEB_DIR', '~acobster/Thingy/public/');
+
 $config = array(
-    'coreDir' => '/Users/acobster/Sites/Thingy/Thingy/',
-    'webDir' => '~acobster/Thingy/public/',
     'debug' => true,
     'environment' => 'devel',
     'db' => array(
@@ -17,6 +18,9 @@ $config = array(
             'user' => 'coby',
             'password' => 'uL2YcVJPseU5XBBC',
         ),
+    ),
+    'modelDirs' => array(
+        THINGY_CORE_DIR . '/Thingy/Models/',
     ),
     'controllers' => array(
         '*' => 'ThingyCore\Controllers\Controller',
@@ -40,9 +44,6 @@ define('THINGY_DB_NAME', 'thingytest');
 define('THINGY_DB_USER', 'coby');
 define('THINGY_DB_PW', 'uL2YcVJPseU5XBBC');
 
-define('THINGY_CORE_DIR', '/Users/acobster/Sites/Thingy/Thingy/');
-
-define('THINGY_WEB_DIR', '~acobster/Thingy/public/');
 
 define('THINGY_DEBUG', true);
 define('THINGY_DEVEL', true);

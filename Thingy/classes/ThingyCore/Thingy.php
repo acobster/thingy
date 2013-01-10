@@ -29,11 +29,6 @@ class Thingy {
         self::$DEBUG = defined( 'THINGY_DEBUG' )
             ? THINGY_DEBUG
             : false;
-            
-        $modelPath = defined( 'THINGY_DEFAULT_MODEL_DIR' )
-          ? THINGY_DEFAULT_MODEL_DIR
-          : 'classes/ThingyCore/Models/';
-        self::$DEFAULT_MODEL_DIR = THINGY_CORE_DIR . $modelPath;
     }
     
     public function __get( $index ) {
