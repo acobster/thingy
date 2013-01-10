@@ -15,7 +15,7 @@ class Thingy {
     protected $request;
     protected $interpreter;
     
-    public static function single( $config ) {
+    public static function single( $config = false ) {
         if( empty( self::$single ) ) {
             self::$single = new Thingy( $config );
         }
@@ -24,7 +24,7 @@ class Thingy {
 
     protected function __construct( $config ) {
         
-        $this->$config = $config;
+        $this->config = $config;
         
         self::$DEBUG = defined( 'THINGY_DEBUG' )
             ? THINGY_DEBUG

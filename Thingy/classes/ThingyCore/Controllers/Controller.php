@@ -9,13 +9,9 @@ use ThingyCore\Debug;
 
 class Controller {
     
-    protected $defaultModel;
+    const DEFAULT_MODEL = '\ThingyCore\Models\Page';
     
     public function __construct() {
-        $this->defaultModel = defined( THINGY_DEFAULT_MODEL )
-        	? THINGY_DEFAULT_MODEL
-        	: '\ThingyCore\Models\Page';
-        	
         $this->templateClass = defined ( THINGY_TEMPLATE_ENGINE )
             ? THINGY_TEMPLATE_ENGINE
             : 'ThingyCore\Templates\TwigWrapper';
@@ -67,8 +63,15 @@ class Controller {
     
     protected function initModel( $ident, $modelClass = false ) {
         
+        // If we weren't passed a model class name...
         if( empty( $modelClass ) ) {
-            $modelClass = $this->defaultModel;
+            // get it from the config...
+            $modelClass = Thingy::single()->defaultModel;
+            if( empty( $modelClass ) )
+            {
+                // ...or just default.
+                $modelClass = $this::DEFAULT_MODEL;
+            }
         }
         $model = new $modelClass();
         
