@@ -36,6 +36,7 @@ $config = array(
             ),
         ),
     ),
+    'templateEngine' => 'ThingyCore\Templates\TwigWrapper',
     'allowParentPages' => true,
 );
 

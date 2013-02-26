@@ -65,6 +65,11 @@ abstract class Model {
             ->setParameter( 1, $name )
             ->getQuery()
             ->getResult();
+
+        if( empty( $result ) ) {
+            // TODO: throw an exception here
+            return false;
+        }
         
         return $result[0];
     }

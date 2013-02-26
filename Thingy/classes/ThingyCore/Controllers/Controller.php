@@ -10,11 +10,13 @@ use ThingyCore\Debug;
 class Controller {
     
     const DEFAULT_MODEL = '\ThingyCore\Models\Page';
+    const DEFAULT_TEMPLATE_ENGINE = 'ThingyCore\Templates\TwigWrapper';
     
     public function __construct() {
-        $this->templateClass = defined ( THINGY_TEMPLATE_ENGINE )
-            ? THINGY_TEMPLATE_ENGINE
-            : 'ThingyCore\Templates\TwigWrapper';
+        $thingy = Thingy::single();
+        $this->templateClass = isset ( $thingy->templateEngine )
+            ? $thingy->templateEngine
+            : $this::DEFAULT_TEMPLATE_ENGINE;
     }
     
     public function execute( $pieces ) {

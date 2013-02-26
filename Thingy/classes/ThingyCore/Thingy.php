@@ -8,7 +8,8 @@ class Thingy {
     
     public static $DEBUG;
     public static $DEFAULT_MODEL_DIR;
-    public static $config;
+    
+    public $config;
     
     protected static $single;
     
