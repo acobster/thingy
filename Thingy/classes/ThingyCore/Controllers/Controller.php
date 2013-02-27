@@ -42,8 +42,7 @@ class Controller {
         $name = empty( $pieces[0] ) ? 'home' : $pieces[0];
         
         if( count( $pieces ) > 1 ) {
-            if( defined( 'THINGY_ALLOW_PARENT_PAGES' )
-                && THINGY_ALLOW_PARENT_PAGES ) {
+            if( Thingy::single()->enableParentPages ) {
                 $model = $this->initModel( $pieces );
             } else {
                 $this->error404();
@@ -85,7 +84,8 @@ class Controller {
     }
     
     protected function initTemplate( $pieces ) {
-        $file = Interpreter::parseHierarchy( $pieces, $GLOBALS['templates'] );
+        $file = Interpreter::create()->parseHierarchy( 
+            pieces, Thingy::single()->templates );
         $file = $file[0];
         $templateClass = $this->templateClass;
         return new $templateClass( $file );

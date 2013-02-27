@@ -2,19 +2,13 @@
 
 namespace ThingyCore;
 
-use ThingyCore\Debug;
-
 class Request {
-    
-    const DEFAULT_REQUEST_CLASS = 'ThingyCore\Request';
     
     protected $uriString;
     protected $path;
     
     public static function create() {
-        $class = defined( 'THINGY_REQUEST_CLASS' )
-            ? THINGY_REQUEST_CLASS
-            : self::DEFAULT_REQUEST_CLASS;
+        $class = Thingy::single()->requestClass;
         
         return new $class();
     }
@@ -24,7 +18,7 @@ class Request {
      * Enter description here ...
      */
     public function getPath() {
-        return $this->path;
+        return $this->uriString;
     }
     
     /**
@@ -34,6 +28,7 @@ class Request {
 	public function initPath() {
     
         $this->setURIString();
+        Debug::out("URI string: " . $this->uriString);
         
         // Strip leading slashes
         $path = preg_replace( '/^\/*/', '', $this->uriString );
@@ -63,7 +58,7 @@ class Request {
      * Enter description here ...
      */
     protected function setURIString() {
-        $this->uriString = $_SERVER['REQUEST_URI'];
+        $this->uriString = $_GET['r'];
     }
 }
 

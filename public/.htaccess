@@ -2,9 +2,9 @@
 
 ErrorDocument 404 /~acobster/Sites/Thingy/public/error.php
 
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /~acobster/Thingy/public/index.php [L]
-</IfModule>
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . ~acobster/Thingy/public/index.php [L]
+#</IfModule>

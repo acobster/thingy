@@ -2,8 +2,8 @@
 
 namespace ThingyCore;
 
-require_once 'thingy.config.php';
-require_once 'autoload.php';
+require 'thingy.config.php';
+require 'autoload.php';
 
 $thingy = Thingy::single( $GLOBALS['config'] );
 

@@ -2,9 +2,9 @@
 
 use ThingyCore\Debug;
 
-require_once THINGY_CORE_DIR . 'doctrine/lib/Doctrine/ORM/Tools/Setup.php';
+require_once $config['coreDir'] . 'doctrine/lib/Doctrine/ORM/Tools/Setup.php';
 
-$lib = THINGY_CORE_DIR . 'doctrine/';
+$lib = $config['coreDir'] . 'doctrine/';
 \Doctrine\ORM\Tools\Setup::registerAutoloadGit($lib);
 
 function thingyAutoload($className) {
@@ -24,7 +24,7 @@ function thingyAutoload($className) {
     $className = basename ( $className );
     
     // The root dir of where all our classes are
-    $classPath = THINGY_CORE_DIR . "classes/$namespaceDir/";
+    $classPath = $GLOBALS['config']['coreDir'] . "classes/$namespaceDir/";
     
     // The path of this class, relative to the root class directory:
     $classPath .= str_replace ( '_', '/', $className );
