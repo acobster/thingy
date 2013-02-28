@@ -1,0 +1,9 @@
+autoload.php
+classes/ThingyCore/Controllers/Controller.php
+classes/ThingyCore/Interpreter.php
+classes/ThingyCore/Models/Model.php
+classes/ThingyCore/Request.php
+classes/ThingyCore/Templates/Template.php
+classes/ThingyCore/Templates/TwigWrapper.php
+classes/ThingyCore/Thingy.php
+thingy.config.php

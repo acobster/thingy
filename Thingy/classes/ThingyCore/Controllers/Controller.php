@@ -19,32 +19,31 @@ class Controller {
             : $this::DEFAULT_TEMPLATE_ENGINE;
     }
     
-    public function execute( $pieces ) {
-        $this->doAction( $pieces );
+    public function execute( $path ) {
+        $this->doAction( $path );
         if( Thingy::$DEBUG ) {
             Debug::writeFooter();
         }
     }
     
-    public function doAction( $pieces ) {
-        $first = isset( $pieces[0] ) ? $pieces[0] : 'index';
+    public function doAction( $path ) {
+        $first = isset( $path[0] ) ? $path[0] : 'index';
         
         $reflection = new \ReflectionClass( $this );
         if( $reflection->hasMethod( $first ) ) {
-            $this->$first( array_slice( $pieces, 1 ) );
+            $this->$first( array_slice( $path, 1 ) );
         } else {
-            $this->index( $pieces );
+            $this->index( $path );
         }
     }
     
-    public function index( $pieces ) {
+    public function index( $path ) {
         
-        $name = empty( $pieces[0] ) ? 'home' : $pieces[0];
+        $name = empty( $path[0] ) ? 'home' : $path[0];
         
-        if( count( $pieces ) > 1 ) {
-            if( defined( 'THINGY_ALLOW_PARENT_PAGES' )
-                && THINGY_ALLOW_PARENT_PAGES ) {
-                $model = $this->initModel( $pieces );
+        if( count( $path ) > 1 ) {
+            if( Thingy::single()->enableParentPages ) {
+                $model = $this->initModel( $path );
             } else {
                 $this->error404();
                 return;
@@ -53,11 +52,10 @@ class Controller {
             $model = $this->initModel( $name );
         }
         
-        $template = $this->initTemplate( $pieces );
+        $template = $this->initTemplate( $path );
         
         if( ! empty( $model ) ) {
             $data = $model->prepare();
-            // Debug::dump($data);
             $template->display( $data );
         } else {
             $this->error404();
@@ -85,9 +83,9 @@ class Controller {
         }
     }
     
-    protected function initTemplate( $pieces ) {
+    protected function initTemplate( $path ) {
         $file = Interpreter::parseHierarchy(
-            $pieces, Thingy::single()->templates );
+            $path, Thingy::single()->templates );
         $file = $file[0];
         $templateClass = $this->templateClass;
         return new $templateClass( $file );

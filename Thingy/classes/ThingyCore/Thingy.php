@@ -49,10 +49,10 @@ class Thingy {
         $this->request->initPath();
         
         // Get our method of parsing the request from config
-        $this->interpreter = Interpreter::create( $this->request );
+        $this->interpreter = Interpreter::create();
         
         // Get a shiny new controller object
-        $this->interpreter->interpret();
+        $this->interpreter->interpret( $this->request );
     }
 }
 

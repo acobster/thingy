@@ -2,43 +2,32 @@
 
 namespace ThingyCore;
 
-use ThingyCore\Debug;
-
 class Interpreter {
+
+    protected static $blah = 0;
     
     const DEFAULT_INTERPRETER_CLASS = 'ThingyCore\Interpreter';
     const DEFAULT_CONTROLLER_CLASS = 'ThingyCore\Controllers\Controller';
         
     protected $request;
-    protected static $pieces;
+    protected static $path;
     
-    public static function create( Request $request ) {
-        $class = defined( 'THINGY_INTERPRETER_CLASS')
-            ? THINGY_INTERPRETER_CLASS
-            : self::DEFAULT_INTERPRETER_CLASS;
-            
+    public static function create() {
+        $class = Thingy::single()->interpreterClass;
         return new $class( $request );
     }
 
-    /**
-     * @param Request $request
-     */
-    protected function __construct( Request $request ) {
-        $this->request = $request;
-    }
-
-    public function interpret() {
-        $pieces = $this->request->getPath();
-        list( $controllerClass, $unconsumedPieces ) = static::parseHierarchy(
-            $pieces, $GLOBALS['scheme'] );
+    public function interpret( Request $request ) {
+        $path = $request->getPath();
+        list( $controllerClass, $untrodden ) = static::parseHierarchy(
+            $path, Thingy::single()->controllers );
 
         if( ! class_exists( $controllerClass) ) {
-            Debug::out( "$controllerClass not found: defaulting" );
-            $controllerClass = self::DEFAULT_CONTROLLER_CLASS;
+            throw new RunTimeException( "Bad controller: $contollerClass" );
         }
 
         $controller = new $controllerClass();
-        $controller->execute( $unconsumedPieces );
+        $controller->execute( $untrodden );
     }
 
     /**

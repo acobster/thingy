@@ -5,11 +5,13 @@
  */
 
 define('THINGY_CORE_DIR', '/Users/acobster/Sites/thingy/thingy/');
-define('THINGY_WEB_DIR', '~acobster/thingy/public/');
+define('THINGY_WEB_DIR', '/Users/acobster/Sites/thingy/public/');
 
 $config = array(
     'debug' => true,
-    'environment' => 'devel',
+    'devel' => true,
+    'coreDir' => '/Users/acobster/Sites/thingy/thingy/',
+    'webDir' => '/Users/acobster/Sites/thingy/public/',
     'db' => array(
         'default' => array(
             'driver' => 'pdo_mysql',
@@ -19,8 +21,9 @@ $config = array(
             'password' => 'uL2YcVJPseU5XBBC',
         ),
     ),
+    // paths are relative to coreDir 
     'modelDirs' => array(
-        THINGY_CORE_DIR . '/Thingy/Models/',
+        'Models/',
     ),
     'controllers' => array(
         '*' => 'ThingyCore\Controllers\Controller',
@@ -35,20 +38,13 @@ $config = array(
         ),
     ),
     'templateEngine' => 'ThingyCore\Templates\TwigWrapper',
-    'allowParentPages' => true,
+    'requestClass' => 'ThingyCore\Request',
+    'interpreterClass' => 'ThingyCore\Interpreter',
+    'enableParentPages' => true,
 );
-
-define('THINGY_DB_DRIVER', 'pdo_mysql');
-define('THINGY_DB_NAME', 'thingytest');
-define('THINGY_DB_USER', 'coby');
-define('THINGY_DB_PW', 'uL2YcVJPseU5XBBC');
 
 
 define('THINGY_DEBUG', true);
-define('THINGY_DEVEL', true);
-
-
-
 
 
 /* Optional specs */
@@ -57,8 +53,6 @@ define('THINGY_DEVEL', true);
 //define('THINGY_CACHE', true);
 // Where your cache files are stored, relative to the 
 //define('THINGY_SITE_DIR_CACHE', 'cache/');
-// Template engine
-//define('THINGY_TEMPLATE_ENGINE', 'ThingyCore\Templates\TwigWrapper');
 // Default definition of a Request
 //define('THINGY_REQUEST_CLASS', 'Blah\RequestBlah');
 // Default method of "interpreting" a Request into a Controller
@@ -68,32 +62,6 @@ define('THINGY_DEVEL', true);
 //define('THINGY_LOGIN_WHITELIST', 
 // The path to the IP whitelist. Relative to the core directory.
 //define('THINGY_IP_WHITELIST', 'security/login_whitelist');
-// Allow parent pages
-define( 'THINGY_ALLOW_PARENT_PAGES', true );
 
-$GLOBALS['scheme'] = array(
-    '*' => 'ThingyCore\Controllers\Controller',
-    'posts' => 'ThingyCore\Controllers\PostController',
-);
-
-$GLOBALS['templates'] = array(
-    '*'	=> 'index.html',
-    'one' => array(
-        '*' => 'index.html',
-        'two' => array(
-            '*' => 'index.html',
-            'eels' => 'fancy.html',
-        ),
-    ),
-);
-
-$GLOBALS['connections'] = array(
-    'default' => array(
-        'driver'   => THINGY_DB_DRIVER,
-        'user'     => THINGY_DB_USER,
-        'password' => THINGY_DB_PW,
-        'dbname'   => THINGY_DB_NAME,
-    )
-);
 
 ?>

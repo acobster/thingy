@@ -2,19 +2,13 @@
 
 namespace ThingyCore;
 
-use ThingyCore\Debug;
-
 class Request {
-    
-    const DEFAULT_REQUEST_CLASS = 'ThingyCore\Request';
     
     protected $uriString;
     protected $path;
     
     public static function create() {
-        $class = defined( 'THINGY_REQUEST_CLASS' )
-            ? THINGY_REQUEST_CLASS
-            : self::DEFAULT_REQUEST_CLASS;
+        $class = Thingy::single()->requestClass;
         
         return new $class();
     }
@@ -36,7 +30,7 @@ class Request {
         $this->setURIString();
         
         // Strip leading slashes
-        $path = preg_replace( '/^\/*/', '', $this->uriString );
+        $path = preg_replace( '|^\/*|', '', $this->uriString );
         // Strip the protocol/domain stuff; it doesn't tell us anything new
         $path = str_replace( THINGY_WEB_DIR, '', $path );
         // Strip the query string; we can worry about it in the Controller
