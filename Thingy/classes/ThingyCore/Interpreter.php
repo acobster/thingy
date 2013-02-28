@@ -29,7 +29,7 @@ class Interpreter {
 
     public function interpret() {
         $pieces = $this->request->getPath();
-        list( $controllerClass, $pieces ) = static::parseHierarchy(
+        list( $controllerClass, $unconsumedPieces ) = static::parseHierarchy(
             $pieces, $GLOBALS['scheme'] );
 
         if( ! class_exists( $controllerClass) ) {
@@ -38,23 +38,52 @@ class Interpreter {
         }
 
         $controller = new $controllerClass();
-        $controller->execute( $pieces );
+        $controller->execute( $unconsumedPieces );
     }
 
-    public static function parseHierarchy( $pieces, $stack ) {
+    /**
+     * Parse a Thingy tree and get the most specific class/template applicable
+     * to the path.
+     * 
+     * @param array $pieces the URI path
+     * @param array $tree the Thingy tree
+     * @param boolean $default the wildcard value for the current level of the
+     * Thingy tree
+     */
+    public static function parseHierarchy( $pieces, $tree, $default = false ) {
         
+        // If the current level of the tree does not specify a wildcard, and no
+        // default was specified, that's bad. This should only happen at the top
+        // of the heirarchy, as any recursive call will pass a default down, so
+        // we can assume it's a config error.
+        if( ! $default and empty( $tree['*'] ) ) {
+            throw new \RunTimeException(
+                'configuration error: top level wildcard not set' );
+        }
+        // If a wildcard is specified at this level, use it as the default
+        if( ! empty( $tree['*'] ) ) {
+            $default = $tree['*'];
+        }
+
         $first = $pieces[0];
         
-        if( isset( $stack[$first] ) ) {
-            if( is_string( $stack[$first] ) ) {
+        if( isset( $tree[$first] ) ) {
+
+            $node = $tree[$first];
+
+            // A value for this level of the tree was specified.
+            // Return it or recurse if it's more Thingy tree.
+            if( is_string( $node ) ) {
                 $pieces = array_slice( $pieces, 1 );
-                return array( $stack[$first], $pieces );
+                return array( $node, $pieces );
             } else {
                 return static::parseHierarchy(
-                    array_slice( $pieces, 1 ), $stack[$first] );
+                    array_slice( $pieces, 1 ), $node, $default );
             }
+
         } else {
-            return array( $stack['*'], $pieces );
+            // Can't get any more specific, so return the default.
+            return array( $default, $pieces );
         }
     }
 }

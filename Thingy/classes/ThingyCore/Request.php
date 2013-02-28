@@ -63,7 +63,7 @@ class Request {
      * Enter description here ...
      */
     protected function setURIString() {
-        $this->uriString = $_SERVER['REQUEST_URI'];
+        $this->uriString = $_GET['r'];
     }
 }
 

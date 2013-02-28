@@ -4,8 +4,8 @@
  * Config file for Thingy installation
  */
 
-define('THINGY_CORE_DIR', '/Users/acobster/Sites/Thingy/Thingy/');
-define('THINGY_WEB_DIR', '~acobster/Thingy/public/');
+define('THINGY_CORE_DIR', '/Users/acobster/Sites/thingy/thingy/');
+define('THINGY_WEB_DIR', '~acobster/thingy/public/');
 
 $config = array(
     'debug' => true,
@@ -29,9 +29,7 @@ $config = array(
     'templates' => array(
         '*'	=> 'index.html',
         'one' => array(
-            '*' => 'index.html',
             'two' => array(
-                '*' => 'index.html',
                 'eels' => 'fancy.html',
             ),
         ),

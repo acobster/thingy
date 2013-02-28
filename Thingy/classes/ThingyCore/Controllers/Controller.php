@@ -57,6 +57,7 @@ class Controller {
         
         if( ! empty( $model ) ) {
             $data = $model->prepare();
+            // Debug::dump($data);
             $template->display( $data );
         } else {
             $this->error404();
@@ -85,7 +86,8 @@ class Controller {
     }
     
     protected function initTemplate( $pieces ) {
-        $file = Interpreter::parseHierarchy( $pieces, $GLOBALS['templates'] );
+        $file = Interpreter::parseHierarchy(
+            $pieces, Thingy::single()->templates );
         $file = $file[0];
         $templateClass = $this->templateClass;
         return new $templateClass( $file );

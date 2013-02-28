@@ -75,12 +75,13 @@ abstract class Model {
     }
     
     public function prepare() {
+        
         $data = array();
         foreach( $this->_columns as $v ) {
-            if( ! isset( $this->$v ) ) {
-                Debug::error( "Attempting to access null property: $v" );
+            if( isset( $this->$v ) ) {
+                $data[$v] = $this->$v;
             }
-            $data[$v] = $this->$v;
+            //else { Debug::error( "Attempting to access null property: $v" ); }
         }
         return $data;
     }
