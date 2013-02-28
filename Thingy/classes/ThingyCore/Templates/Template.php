@@ -2,16 +2,19 @@
 
 namespace ThingyCore\Templates;
 
+use ThingyCore\Thingy;
 use ThingyCore\Debug;
 
 abstract class Template {
+
+    const DEFAULT_DIR = 'templates/default/';
     
     protected static $DEFAULT = 'index.html';
     
     abstract function getOutput( array $data );
     
     public static function getFullPath( $file ) {
-        $path = THINGY_CORE_DIR . THINGY_SITE_DIR_TEMPLATE . $file;
+        $path = Thingy::single()->coreDir . THINGY_SITE_DIR_TEMPLATE . $file;
         return $path;
     }
     
@@ -21,7 +24,13 @@ abstract class Template {
     
     public static function getTemplateFile( $name ) {
         
-        $path = THINGY_CORE_DIR . 'templates/default/';
+        $thingy = Thingy::single();
+
+        $path = $thingy->coreDir
+            . ( isset( $thingy->templateDir )
+                ? $thingy->templateDir
+                : static::DEFAULT_DIR );
+
         $template = $path . $name;
         
         if( file_exists( $template ) ) {

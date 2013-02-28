@@ -32,7 +32,7 @@ class Request {
         // Strip leading slashes
         $path = preg_replace( '|^\/*|', '', $this->uriString );
         // Strip the protocol/domain stuff; it doesn't tell us anything new
-        $path = str_replace( THINGY_WEB_DIR, '', $path );
+        $path = str_replace( Thingy::single()->webDir, '', $path );
         // Strip the query string; we can worry about it in the Controller
         $path = preg_replace( '/\?.*/', '', $path );
         // Put segments into an array

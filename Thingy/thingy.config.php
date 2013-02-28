@@ -4,9 +4,6 @@
  * Config file for Thingy installation
  */
 
-define('THINGY_CORE_DIR', '/Users/acobster/Sites/thingy/thingy/');
-define('THINGY_WEB_DIR', '/Users/acobster/Sites/thingy/public/');
-
 $config = array(
     'debug' => true,
     'devel' => true,

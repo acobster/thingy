@@ -2,7 +2,8 @@
 
 namespace ThingyCore\Templates;
 
-require_once THINGY_CORE_DIR . 'templates/engine/Twig/Autoloader.php';
+require_once \ThingyCore\Thingy::single()->coreDir
+    . 'templates/engine/Twig/Autoloader.php';
 
 class TwigWrapper extends Template {
     
