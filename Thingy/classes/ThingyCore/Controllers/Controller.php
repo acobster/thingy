@@ -21,7 +21,7 @@ class Controller {
     
     public function execute( $path ) {
         $this->doAction( $path );
-        if( Thingy::$DEBUG ) {
+        if( Thingy::single()->debug ) {
             Debug::writeFooter();
         }
     }

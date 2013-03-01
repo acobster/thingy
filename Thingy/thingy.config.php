@@ -20,7 +20,7 @@ $config = array(
     ),
     // paths are relative to coreDir 
     'modelDirs' => array(
-        'Models/',
+        'classes/ThingyCore/Models/',
     ),
     'controllers' => array(
         '*' => 'ThingyCore\Controllers\Controller',
@@ -38,27 +38,10 @@ $config = array(
     'requestClass' => 'ThingyCore\Request',
     'interpreterClass' => 'ThingyCore\Interpreter',
     'enableParentPages' => true,
+    'cache' => array(
+        'enabled' => true,
+        'dir' => 'cache',
+    )
 );
-
-
-define('THINGY_DEBUG', true);
-
-
-/* Optional specs */
-
-// Enable caching
-//define('THINGY_CACHE', true);
-// Where your cache files are stored, relative to the 
-//define('THINGY_SITE_DIR_CACHE', 'cache/');
-// Default definition of a Request
-//define('THINGY_REQUEST_CLASS', 'Blah\RequestBlah');
-// Default method of "interpreting" a Request into a Controller
-//define('THINGY_INTERPRETER_CLASS', 'Blah\InterpreterBlah');
-// Only allow logins from IPs from the whitelist file defined in 
-//define('THINGY_RESTRICT_IPS', true);
-//define('THINGY_LOGIN_WHITELIST', 
-// The path to the IP whitelist. Relative to the core directory.
-//define('THINGY_IP_WHITELIST', 'security/login_whitelist');
-
 
 ?>

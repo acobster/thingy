@@ -24,12 +24,7 @@ class Thingy {
     }
 
     protected function __construct( $config ) {
-        
         $this->config = $config;
-        
-        self::$DEBUG = defined( 'THINGY_DEBUG' )
-            ? THINGY_DEBUG
-            : false;
     }
     
     public function __get( $index ) {
