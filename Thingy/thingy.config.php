@@ -1,7 +1,10 @@
 <?php
 
 /*
- * Config file for Thingy installation
+ * Config file for Thingy installation.
+ *
+ * Unless otherwise noted, directories without leading forward slashes
+ * are relative to coreDir.
  */
 
 $config = array(
@@ -18,13 +21,13 @@ $config = array(
             'password' => 'uL2YcVJPseU5XBBC',
         ),
     ),
-    // paths are relative to coreDir 
     'modelDirs' => array(
         'classes/ThingyCore/Models/',
     ),
     'controllers' => array(
         '*' => 'ThingyCore\Controllers\Controller',
         'posts' => 'ThingyCore\Controllers\PostController',
+        'login' => 'ThingyCore\Controllers\LoginController',
     ),
     'templates' => array(
         '*'	=> 'index.html',
@@ -41,7 +44,10 @@ $config = array(
     'cache' => array(
         'enabled' => true,
         'dir' => 'cache',
-    )
+    ),
+    'ignoreOnAutoload' => array(
+        '/^Twig/',
+    ),
 );
 
 ?>

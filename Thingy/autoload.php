@@ -9,40 +9,28 @@ $lib = $config['coreDir'] . 'doctrine/';
 
 function thingyAutoload($className) {
   
+    // ignore certain regexs specified in the config
+    foreach( $GLOBALS['config']['ignoreOnAutoload'] as $expression ) {
+        if( preg_match( $expression, $className ) ) {
+            return;
+        }
+    }
+
     // Don't load twig stuff
     if( strpos($className, 'Twig') === 0 ) {
         return;
     }
-        
-    // Convert backslashes to directory-friendly forward slashes
-    $className = str_replace ( '\\', '/', $className );
     
-    // Isolate the namespace
-    $namespaceDir = dirname ( $className );
-    
-    // Isolate class name
-    $className = basename ( $className );
-    
-    // The root dir of where all our classes are
-    $classPath = $GLOBALS['config']['coreDir'] . "classes/$namespaceDir/";
-    
-    // The path of this class, relative to the root class directory:
-    $classPath .= str_replace ( '_', '/', $className );
-    // The containing directory, relative to the root class directory:
-    $classDir = dirname ( $classPath ) . '/';
-    // Just the filename:
-    $fileName = basename ( $classPath );
-    
-    // If the class file has the same name as the directory it's in,
-    // put that directory name in the path.
-    $classFolder = (is_dir ( $classDir . '/' . $fileName )) ? $fileName . '/' : '';
-    
-    // Put it all together and dish it out...
-    $filePath = $classDir . $classFolder . $fileName . '.php';
-    if (file_exists ( $filePath )) {
-        require $filePath;
+    // All forward slashes
+    $relativePath = str_replace ( '\\', '/', $className ) . '.php';
+    // Put it all together and...
+    $fullPath = $GLOBALS['config']['coreDir'] . "classes/$relativePath";
+
+    // ...dish it out
+    if (file_exists ( $fullPath )) {
+        require $fullPath;
     } else {
-        Debug::out( "Shit. Could not load $filePath." );
+        Debug::error( "Could not load $fullPath." );
     }
 }
 

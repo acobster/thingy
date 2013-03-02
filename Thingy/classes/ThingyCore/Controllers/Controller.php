@@ -10,14 +10,6 @@ use ThingyCore\Debug;
 class Controller {
     
     const DEFAULT_MODEL = '\ThingyCore\Models\Page';
-    const DEFAULT_TEMPLATE_ENGINE = 'ThingyCore\Templates\TwigWrapper';
-    
-    public function __construct() {
-        $thingy = Thingy::single();
-        $this->templateClass = isset ( $thingy->templateEngine )
-            ? $thingy->templateEngine
-            : $this::DEFAULT_TEMPLATE_ENGINE;
-    }
     
     public function execute( $path ) {
         $this->doAction( $path );
@@ -87,7 +79,7 @@ class Controller {
         $file = Interpreter::parseHierarchy(
             $path, Thingy::single()->templates );
         $file = $file[0];
-        $templateClass = $this->templateClass;
+        $templateClass = Thingy::single()->templateClass;
         return new $templateClass( $file );
     }
     

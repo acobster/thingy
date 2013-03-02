@@ -8,14 +8,16 @@ class Debug {
     const LEVEL_DEBUG = 1;
     
     static protected $levels = array(
-        self::LEVEL_DEBUG => 'Debug', 
-        self::LEVEL_ERROR => 'Error', 
+        self::LEVEL_ERROR => 'Errors',
+        self::LEVEL_DEBUG => 'Debug Statements',  
     );
   
     static $messages;
     
-    static function out( $message, $level = self::LEVEL_DEBUG ) {
+    static function out( $message, $code = self::LEVEL_DEBUG ) {
         
+        $level = static::$levels[$code];
+
         if( empty(self::$messages) ) {
             self::$messages = array();
         }
@@ -37,41 +39,15 @@ class Debug {
     }
     
     static function writeFooter() {
-        
-        if( ! empty(self::$messages) ) {
-            asort( self::$messages );
-//            $trace = var_export( $trace, true );
-//            echo '<pre>' . $trace . '</pre>';
-            echo '<div id="debugFooter"'
-                . 'style="font-size:0.8em;background:#EEE;">';
-            
-            echo '<h1>Debug Output:</h1>';
-            
-            foreach( self::$messages as $level => $messages ) {
-                
-                $heading = self::$levels[$level];
-                echo "<h2>$heading</h2><table>";
-                foreach ( $messages as $message ) {
-                    $trace = debug_backtrace(false);
-                    $trace = $trace[1];
-                    
-                    echo '<tr>';
-                    echo '<td>';
-                    //echo $trace['file'] . ':' . $trace['line'];
-                    echo '</td>';
-                    echo '<td>' . $message . '</td>';
-    //                echo '<td><pre>' . var_export( $trace, true ) . $message . '</pre></td>';
-                    echo '</tr>';
-                }
-                echo '</table>';
-            
-            }
-            
-        } else {
-            echo '<p>No debug info</p>';
+
+        if( ! empty( static::$messages ) ) {
+            asort( static::$messages );
         }
+
+        $templateClass = Thingy::single()->templateClass;
+        $template = new $templateClass( 'debug.html' );
+        $template->display( array( 'messages' => static::$messages ) );
         
-        echo '</div>';
     }
 }
 

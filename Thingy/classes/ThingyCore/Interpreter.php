@@ -23,7 +23,7 @@ class Interpreter {
             $path, Thingy::single()->controllers );
 
         if( ! class_exists( $controllerClass) ) {
-            throw new RunTimeException( "Bad controller: $contollerClass" );
+            throw new \RunTimeException( "Bad controller: $controllerClass" );
         }
 
         $controller = new $controllerClass();
@@ -58,16 +58,16 @@ class Interpreter {
         
         if( isset( $tree[$first] ) ) {
 
-            $node = $tree[$first];
+            $step = $tree[$first];
 
             // A value for this level of the tree was specified.
             // Return it or recurse if it's more Thingy tree.
-            if( is_string( $node ) ) {
+            if( is_string( $step ) ) {
                 $pieces = array_slice( $pieces, 1 );
-                return array( $node, $pieces );
+                return array( $step, $pieces );
             } else {
                 return static::parseHierarchy(
-                    array_slice( $pieces, 1 ), $node, $default );
+                    array_slice( $pieces, 1 ), $step, $default );
             }
 
         } else {
