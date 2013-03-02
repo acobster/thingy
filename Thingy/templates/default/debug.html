@@ -1,0 +1,20 @@
+<div id="debugFooter" 
+    style="font-size:0.8em;background:#EEE;padding:7px;">
+
+    {% if messages %}
+    <h2>Debug Output</h2>
+
+    {% for label, level in messages %}
+    
+    <h3>{{ label }}</h3>
+
+        {% for message in level %}
+        <p>{{ message }}</p>
+        {% endfor %}
+
+    {% endfor %}
+
+    {% else %}
+    No debug info
+    {% endif %}
+</div>
