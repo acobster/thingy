@@ -15,11 +15,6 @@ function thingyAutoload($className) {
             return;
         }
     }
-
-    // Don't load twig stuff
-    if( strpos($className, 'Twig') === 0 ) {
-        return;
-    }
     
     // All forward slashes
     $relativePath = str_replace ( '\\', '/', $className ) . '.php';
