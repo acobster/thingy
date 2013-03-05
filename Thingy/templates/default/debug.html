@@ -9,7 +9,7 @@
     <h3>{{ label }}</h3>
 
         {% for message in level %}
-        <p>{{ message }}</p>
+        <p>{{ message|raw }}</p>
         {% endfor %}
 
     {% endfor %}

@@ -56,7 +56,7 @@ class Interpreter {
 
         // We've somehow run out of steps on the path. Default.
         if( empty( $pieces[0] ) ) {
-            return $default;
+            return array( $default, array() );
         }
 
         $first = $pieces[0];
