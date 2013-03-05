@@ -9,11 +9,11 @@ use ThingyCore\Debug;
 
 class Controller {
     
-    const DEFAULT_MODEL = '\ThingyCore\Models\Page';
+    const DEFAULT_MODEL_CLASS = '\ThingyCore\Models\Page';
     
     public function execute( $path ) {
         $this->doAction( $path );
-        if( Thingy::single()->debug ) {
+        if( thingy()->debug ) {
             Debug::writeFooter();
         }
     }
@@ -34,7 +34,7 @@ class Controller {
         $name = empty( $path[0] ) ? 'home' : $path[0];
         
         if( count( $path ) > 1 ) {
-            if( Thingy::single()->enableParentPages ) {
+            if( thingy()->enableParentPages ) {
                 $model = $this->initModel( $path );
             } else {
                 $this->error404();
@@ -56,15 +56,9 @@ class Controller {
     
     protected function initModel( $ident, $modelClass = false ) {
         
-        // If we weren't passed a model class name...
+        // If we weren't passed a model class name, default
         if( empty( $modelClass ) ) {
-            // get it from the config...
-            $modelClass = Thingy::single()->defaultModel;
-            if( empty( $modelClass ) )
-            {
-                // ...or just default.
-                $modelClass = $this::DEFAULT_MODEL;
-            }
+            $modelClass = $this::DEFAULT_MODEL_CLASS;
         }
         $model = new $modelClass();
         
@@ -77,7 +71,7 @@ class Controller {
     
     protected function initTemplate( $path ) {
         $file = Interpreter::parseHierarchy(
-            $path, Thingy::single()->templates );
+            $path, thingy()->templates );
         $file = $file[0];
         $templateClass = Thingy::single()->templateClass;
         return new $templateClass( $file );
@@ -87,8 +81,6 @@ class Controller {
         $template = new Templates\TwigWrapper( '404.html' );
         $template->display( array() );
     }
-
-    public function findByName( $name ) { echo "<p>find by name: $name</p>"; }
 }
 
 ?>

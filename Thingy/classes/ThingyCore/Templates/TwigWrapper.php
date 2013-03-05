@@ -2,8 +2,7 @@
 
 namespace ThingyCore\Templates;
 
-require_once \ThingyCore\Thingy::single()->coreDir
-    . 'templates/engine/Twig/Autoloader.php';
+require_once thingy()->coreDir . 'templates/engine/Twig/Autoloader.php';
 
 class TwigWrapper extends Template {
     
@@ -20,7 +19,7 @@ class TwigWrapper extends Template {
     }
     
     public function getOutput( array $data, $edit = false ) {
-        return $this->twig->render($this->templateFileName, $data);
+        return $this->twig->render( $this->templateFileName, $data );
     }
 }
 

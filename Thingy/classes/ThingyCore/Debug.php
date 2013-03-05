@@ -44,7 +44,7 @@ class Debug {
             asort( static::$messages );
         }
 
-        $templateClass = Thingy::single()->templateClass;
+        $templateClass = thingy()->templateClass;
         $template = new $templateClass( 'debug.html' );
         $template->display( array( 'messages' => static::$messages ) );
         

@@ -2,7 +2,6 @@
 
 namespace ThingyCore\Models;
 
-use ThingyCore\Thingy;
 use ThingyCore\Debug;
 
 use Doctrine\ORM\Tools\Setup;
@@ -22,15 +21,13 @@ abstract class Model {
     
     public function __construct() {
 
-        $thingy = Thingy::single();
-
         $modelDirs = array_map(
-            function($dir) { return Thingy::single()->coreDir.$dir; },
-            $thingy->modelDirs );
+            function($dir) { return thingy()->coreDir.$dir; },
+            thingy()->modelDirs );
 
         $config = Setup::createAnnotationMetadataConfiguration(
-            $thingy->modelDirs, $thingy->devel );
-        $this->_em = EntityManager::create( $thingy->db['default'],
+            thingy()->modelDirs, thingy()->debug );
+        $this->_em = EntityManager::create( thingy()->db['default'],
             $config );
         $this->_repo = $this->_em->getRepository( get_class($this) );
     }

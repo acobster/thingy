@@ -54,6 +54,11 @@ class Interpreter {
             $default = $tree['*'];
         }
 
+        // We've somehow run out of steps on the path. Default.
+        if( empty( $pieces[0] ) ) {
+            return $default;
+        }
+
         $first = $pieces[0];
         
         if( isset( $tree[$first] ) ) {

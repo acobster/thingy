@@ -24,11 +24,9 @@ abstract class Template {
     
     public static function getTemplateFile( $name ) {
         
-        $thingy = Thingy::single();
-
-        $path = $thingy->coreDir
-            . ( isset( $thingy->templateDir )
-                ? $thingy->templateDir
+        $path = thingy()->coreDir
+            . ( isset( thingy()->templateDir )
+                ? thingy()->templateDir
                 : static::DEFAULT_DIR );
 
         $template = $path . $name;
